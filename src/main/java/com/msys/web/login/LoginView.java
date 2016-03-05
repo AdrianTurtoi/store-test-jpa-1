@@ -1,10 +1,7 @@
 package com.msys.web.login;
 
 import com.msys.repository.UserRepository;
-import com.msys.web.view.ImportView;
 import com.vaadin.data.validator.AbstractValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -24,23 +21,17 @@ import com.vaadin.ui.themes.Reindeer;
 public class LoginView extends CustomComponent implements View, Button.ClickListener {
 
 	private UserRepository userRepo;
+	private static final long serialVersionUID = 1L;
+	public static final String NAME = "login";
+	private final TextField user;
+	private final PasswordField password;
+	private final Button loginButton;
+	public static String userName;
+	public static String pass;
 
 	public void setUserRepository(UserRepository user) {
 		this.userRepo = user;
 	}
-
-	private static final long serialVersionUID = 1L;
-
-	public static final String NAME = "login";
-
-	private final TextField user;
-
-	private final PasswordField password;
-
-	private final Button loginButton;
-
-	public static String userName;
-	public static String pass;
 
 	public LoginView() {
 		setSizeFull();
@@ -80,7 +71,6 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 	}
 
 	private static final class PasswordValidator extends AbstractValidator<String> {
-
 		private static final long serialVersionUID = 1L;
 
 		public PasswordValidator() {
@@ -89,8 +79,6 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 
 		@Override
 		protected boolean isValidValue(String value) {
-			// Password must be at least 8 characters long and contain at least
-			// one number
 			if (value != null && (value.length() < 8 || !value.matches(".*\\d.*"))) {
 				return false;
 			}
@@ -105,8 +93,7 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 
 	@Override
 	public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
-        
-		
+
 		if (!user.isValid() || !password.isValid()) {
 			return;
 		}
@@ -118,13 +105,9 @@ public class LoginView extends CustomComponent implements View, Button.ClickList
 				&& password.equals(userRepo.findByEmail(username).getPassword());
 
 		if (isValid) {
-
 			getSession().setAttribute("user", username);
-
-			getUI().getNavigator().navigateTo(LoginMainView.NAME);//
-
+			getUI().getNavigator().navigateTo(LoginMainView.NAME);
 		} else {
-
 			this.password.setValue(null);
 			this.password.focus();
 		}

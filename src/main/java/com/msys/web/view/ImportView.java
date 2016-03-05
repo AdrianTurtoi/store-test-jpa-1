@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.springframework.util.StringUtils;
 import com.vaadin.ui.Upload;
 import com.msys.entity.Article;
 import com.msys.entity.CommonOrder;
@@ -20,11 +19,10 @@ import com.msys.entity.Supplier;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class ImportView extends CustomComponent implements View, Upload.Receiver {
@@ -33,15 +31,18 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 	public static final String NAME = "import";
 	private final Grid grid = new Grid();
 	private final Grid grid1 = new Grid();
-	// private final CommonOrderRepository commonOrderRepo;
 
 	final Upload upload = new Upload("Upload the file here", this);
 
-	VerticalLayout mainLayout = new VerticalLayout(upload,
-			new Label("Click 'Browse' to " + "select a file and then click 'Upload'."), grid, grid1);
-
 	public ImportView(/* CommonOrderRepository commonOrderRepo */) {
 		// this.commonOrderRepo = commonOrderRepo;
+
+		VerticalLayout mainLayout = new VerticalLayout(upload, grid, grid1);
+		mainLayout.setSizeFull();
+		mainLayout.setComponentAlignment(upload, Alignment.TOP_CENTER);
+		mainLayout.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
+		mainLayout.setComponentAlignment(grid1, Alignment.MIDDLE_CENTER);
+
 		CssLayout csLay = new CssLayout(mainLayout);
 		csLay.setSizeFull();
 		setCompositionRoot(csLay);
@@ -62,7 +63,8 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 		List<CommonOrder> commonOrderList = new ArrayList<>();
 
 		try {
-			DataInputStream dis = new DataInputStream(new FileInputStream("H:\\git\\store-test-jpa-2\\" + filename));
+			DataInputStream dis = new DataInputStream(
+					new FileInputStream("D:\\Programe\\GitHub\\store-test-jpa-1\\" + filename));
 			String input;
 
 			ps = new PipedOutputStream();
@@ -99,7 +101,6 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 					grid.addSelectionListener(e -> {
 
 						if (e.getSelected().isEmpty()) {
-							// listOrderItems(listOI);
 						} else {
 							CommonOrder co = (CommonOrder) e.getSelected().iterator().next();
 							final boolean persisted = co.getOrderItem() != null;
@@ -108,17 +109,6 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 							}
 						}
 					});
-
-					/*
-					 * grid1.setHeight(30, Unit.PERCENTAGE); grid1.setWidth(100,
-					 * Unit.PERCENTAGE); grid1.setColumns("article.articleNo",
-					 * "article.articleName", "quantity", "supplier.supplierNo",
-					 * "supplier.supplierName");
-					 */
-					// tag::listAbonats[]
-
-					// final BeanItemContainer<OrderItem> ds = new
-					// BeanItemContainer<OrderItem>(OrderItem.class, listOI);
 
 				} else if (input.contains("on;")) {
 
@@ -146,13 +136,4 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 		grid1.setContainerDataSource(ds);
 		grid1.markAsDirty();
 	}
-
-	/*
-	 * private List<OrderItem> findOrderItemByArticleNo(List<OrderItem>
-	 * orderItem, int articleNo) {
-	 * 
-	 * List<OrderItem> orderItemList = new ArrayList<>(); for (OrderItem elem :
-	 * orderItem) { if (elem.getArticle().getArticleNo() == articleNo) {
-	 * orderItemList.add(elem); } } return orderItemList; }
-	 */
 }

@@ -36,7 +36,7 @@ public class StoreMSysApplication {
 			log.info("");
 
 			// fetch an individual USer by ID
-			User userOne = userRepo.findOne(1l);
+			User userOne = userRepo.findOne(7l);
 			log.info("User found with findOne(7L):");
 			log.info("--------------------------------");
 			log.info(userOne.toString()); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -45,7 +45,7 @@ public class StoreMSysApplication {
 			// fetch Users by last name
 			log.info("USer found with findByName('adrian.turtoi@gmail.com'):");
 			log.info("--------------------------------------------");
-			log.info(userRepo.findByEmail("adrianturtoi@gmail.com").toString());
+			log.info(userRepo.findByEmail("adrian.turtoi@gmail.com").toString());
 			log.info("");
 
 		};
