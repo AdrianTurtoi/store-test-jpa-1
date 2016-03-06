@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -38,6 +39,8 @@ public class OrderItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="my_entity_seq_gen")
+	//@SequenceGenerator(name="my_entity_seq_gen", sequenceName="HIBERNATE_SEQUENCE")
 	@Column(name = "ID")
 	private Long id;
 

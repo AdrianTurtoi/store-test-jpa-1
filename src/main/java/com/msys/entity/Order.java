@@ -39,6 +39,8 @@ public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="my_entity_seq_gen")
+	//@SequenceGenerator(name="my_entity_seq_gen", sequenceName="HIBERNATE_SEQUENCE")
 	@Column(name = "ID")
 	private Long id;
 

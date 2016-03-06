@@ -17,10 +17,9 @@ public class User {
  	public User() {
 	}
 
-	public User(Long id, String userName, String password, String firstName, String lastName, String phoneNo,
+	public User(String userName, String password, String firstName, String lastName, Long phoneNo,
 			String email, String adress, Long identityNo, Date birtday, byte administrator) {
-		super();
-		this.id = id;
+		super();		
 		this.userName = userName;
 		this.password = password;
 		this.firstName = firstName;
@@ -34,7 +33,7 @@ public class User {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)	
 	@Column(name = "user_id")
 	private Long id;
 
@@ -53,7 +52,7 @@ public class User {
 	private String lastName;
 
 	@Column(name = "phone_no")
-	private String phoneNo;
+	private Long phoneNo;
 
 	@NotNull
 	@Column(name = "email")
@@ -112,11 +111,11 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public String getPhoneNo() {
+	public Long getPhoneNo() {
 		return phoneNo;
 	}
 
-	public void setPhoneNo(String phoneNo) {
+	public void setPhoneNo(Long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -39,6 +40,8 @@ public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="my_entity_seq_gen")
+	//@SequenceGenerator(name="my_entity_seq_gen", sequenceName="HIBERNATE_SEQUENCE")
 	@Column(name = "ID")
 	private Long id;
 

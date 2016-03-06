@@ -29,7 +29,7 @@ import com.msys.entity.User;
 @ComponentScan("com.msys.web.login")
 @SpringBootApplication
 
-public class StoreMSysApplication implements CommandLineRunner {
+public class StoreMSysApplication /*implements CommandLineRunner*/ {
 
 	private static final Logger log = LoggerFactory.getLogger(StoreMSysApplication.class);
 
@@ -40,7 +40,7 @@ public class StoreMSysApplication implements CommandLineRunner {
 		SpringApplication.run(StoreMSysApplication.class, args);
 	}
 
-	@Override
+	/*@Override
 	@Transactional
 	public void run(String... strings) throws Exception {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
@@ -71,7 +71,7 @@ public class StoreMSysApplication implements CommandLineRunner {
 		for (Order order : orderRepository.findAll()) {
 			log.info(order.toString());
 		}
-	}
+	}*/
 
 	@Bean
 	public CommandLineRunner loadData(UserRepository userRepo) {
@@ -97,6 +97,11 @@ public class StoreMSysApplication implements CommandLineRunner {
 			log.info(userRepo.findByEmail("adrian.turtoi@gmail.com").toString());
 			log.info("");
 
+			SimpleDateFormat formatter = new SimpleDateFormat("dd.mm.yyyy");
+			
+			userRepo.save(new User ("test", "pass", "firstname", "lastname", 
+					12222L,"test@email.test", "adresss", 12312312L, formatter.parse("16.12.2016"),
+					(byte)0));
 		};
 	}
 }
