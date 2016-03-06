@@ -17,7 +17,6 @@ import com.vaadin.ui.Upload;
 import com.msys.entity.Article;
 import com.msys.entity.CommonOrder;
 import com.msys.entity.OrderItem;
-import com.msys.entity.OrdersItems;
 import com.msys.entity.Supplier;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
@@ -80,8 +79,8 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 					orderDetails = input.substring(3, input.indexOf("[")).split(";");
 
 					Matcher m = Pattern.compile("(?<=\\[)(.+?)(?=\\])").matcher(input);
-					while (m.find()) {
-						orderItems = m.group().split(";");
+/*					while (m.find()) {
+						orderItems = m.group().split(";");new Supplier(Integer.parseInt(orderItems[2]))
 						Article art = new Article(Integer.parseInt(orderItems[0]));
 						Supplier sup = new Supplier(Integer.parseInt(orderItems[2]));
 						listOI.add(new OrderItem(art, Integer.parseInt(orderItems[1]), sup));
@@ -94,22 +93,22 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 
 					commonOrderList.add(new CommonOrder(1L, formatter.parse(orderDetails[0]), listOI,
 							formatter.parse(orderDetails[1]), formatter.parse(orderDetails[2])));
-
-					// listOI.clear();
+*/
+					// 
 
 					grid.setHeight(300, Unit.PIXELS);
 					grid.setWidth(70, Unit.PERCENTAGE);
 					grid.setColumns("id", "deliveryDate", "validFrom", "validTo");
 					grid.setContainerDataSource(new BeanItemContainer<CommonOrder>(CommonOrder.class, commonOrderList));
 
-					grid.addSelectionListener(e -> {
+				/*	grid.addSelectionListener(e -> {
 
-						if (e.getSelected().isEmpty()) {
+					if (e.getSelected().isEmpty()) {
 						} else {
 							CommonOrder co = (CommonOrder) e.getSelected().iterator().next();
-							final boolean persisted = co.getOrderItem() != null;
-							if (persisted) {
-								listOrderItems(co.getOrderItem());
+							//final boolean persisted = co.getOrderItem() != null;
+							//if (persisted) {
+								//listOrderItems(co.getOrderItem());
 							}
 						}
 					});
@@ -120,8 +119,9 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 
 				} else if (input.contains("ol;")) {
 
+				}*/
 				}
-			}
+			} 
 			os.close();
 		} catch (Exception e) {
 			System.out.println("StringUtils reverse: " + e);

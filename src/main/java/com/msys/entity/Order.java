@@ -1,6 +1,7 @@
 package com.msys.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,53 +9,58 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order { 
+public class Order {
 
-	public Order(Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
+	public Order() {
+		orderItems = new HashSet<OrderItem>();
+	}
+
+	public Order(Date deliveryDate, Set<OrderItem> orderItems, Date validFrom, Date validTo) {
 		super();
 		this.deliveryDate = deliveryDate;
-		this.ordersItems = ordersItems;
+		this.orderItems = orderItems;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
 	}
 
-	public Order(Long id, Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
+	public Order(Date deliveryDate, Date validFrom, Date validTo) {
 		super();
-		this.id = id;
 		this.deliveryDate = deliveryDate;
-		this.ordersItems = ordersItems;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private Long id; 
-	
+	private Long id;
+
 	@Column(name = "DELIVERY_DATE")
 	private Date deliveryDate;
-	
-	private Set <OrdersItems> ordersItems;
-	
+
+	private Set<OrderItem> orderItems;
+
 	@Column(name = "VALID_FROM")
 	private Date validFrom;
-	
+
 	@Column(name = "VALID_TO")
 	private Date validTo;
 
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
-    
-    public void setId(Long id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public boolean availableAt(Date inputDate) {
 		return true;
 	}
@@ -67,16 +73,17 @@ public class Order {
 		this.deliveryDate = deliveryDate;
 	}
 
-	@OneToMany(mappedBy = "ORDER", cascade = CascadeType.ALL)
-	public Set<OrdersItems> getOrdersItems() {
-		return ordersItems;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ORDERS_ITEMS", joinColumns = @JoinColumn(name = "ID_ORDER", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_ITEM", referencedColumnName = "ID"))
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
-	public void setOrdersItems(Set<OrdersItems> ordersItems) {
-		this.ordersItems = ordersItems;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
- 	public Date getValidFrom() {
+	public Date getValidFrom() {
 		return validFrom;
 	}
 
@@ -94,7 +101,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", deliveryDate=" + deliveryDate + ", ordersItems=" + ordersItems + ", validFrom="
+		return "Order [id=" + id + ", deliveryDate=" + deliveryDate + ", ordersItems=" + orderItems + ", validFrom="
 				+ validFrom + ", validTo=" + validTo + "]";
-	} 
+	}
 }

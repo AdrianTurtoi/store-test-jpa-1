@@ -1,7 +1,7 @@
 package com.msys.entity;
 
+import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,55 +9,47 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDER_ITEM")
 public class OrderItem {
+
+	public OrderItem() {
+		orders = new HashSet<Order>();
+	}
+
+	public OrderItem(Set<Order> orders, Article article, int quantity, Supplier supplier) {
+		super();
+		this.orders = orders;
+		this.article = article;
+		this.quantity = quantity;
+		this.supplier = supplier;
+	}
 	
+	public OrderItem(Article article, int quantity, Supplier supplier) {
+		super();		
+		this.article = article;
+		this.quantity = quantity;
+		this.supplier = supplier;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	private Long id; 
-	
-	private Set <OrdersItems> ordersItems;
-	
-	public OrderItem(Long id, Set<OrdersItems> ordersItems, Article article, int quantity, Supplier supplier) {
-		super();
-		this.id = id;
-		this.ordersItems = ordersItems;
-		this.article = article;
-		this.quantity = quantity;
-		this.supplier = supplier;
-	}
+	private Long id;
+
+	private Set<Order> orders;
 
 	private Article article;
-	
+
 	@Column(name = "QUANTITY")
 	private int quantity;
-	
-	private Supplier supplier;
-	
-	public OrderItem(Long id, Article article, int quantity, Supplier supplier) {
-		super();
-		this.id = id;
-		this.article = article;
-		this.quantity = quantity;
-		this.supplier = supplier;
-	}
- 
-	public OrderItem() {
-	}
 
-	public OrderItem(Article article, int quantity, Supplier supplier) {
-		super();
-		this.article = article;
-		this.quantity = quantity;
-		this.supplier = supplier;
-	}
-	
+	private Supplier supplier;
+
 	public Long getId() {
 		return id;
 	}
@@ -66,13 +58,13 @@ public class OrderItem {
 		this.id = id;
 	}
 
-	@OneToMany(mappedBy = "ORDER_ITEM")
-	public Set<OrdersItems> getOrdersItems() {
-		return ordersItems;
+	@ManyToMany(mappedBy = "orderItems")
+	public Set<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrdersItems(Set<OrdersItems> ordersItems) {
-		this.ordersItems = ordersItems;
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -105,7 +97,7 @@ public class OrderItem {
 
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", ordersItems=" + ordersItems + ", article=" + article + ", quantity="
-				+ quantity + ", supplier=" + supplier + "]";
-	} 
+		return "OrderItem [id=" + id + ", ordersItems=" + orders + ", article=" + article + ", quantity=" + quantity
+				+ ", supplier=" + supplier + "]";
+	}
 }

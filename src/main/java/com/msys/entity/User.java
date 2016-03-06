@@ -13,10 +13,8 @@ import javax.validation.constraints.NotNull;
 @Table(name = "USERS")
 
 public class User {
-
-	private static final long serialVersionUID = 1L;
-
-	public User() {
+	
+ 	public User() {
 	}
 
 	public User(Long id, String userName, String password, String firstName, String lastName, String phoneNo,

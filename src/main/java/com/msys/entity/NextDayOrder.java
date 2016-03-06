@@ -8,9 +8,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ORDERS")
 public class NextDayOrder extends Order { 
-	
-	public NextDayOrder(Long id, Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
-		super(id, deliveryDate, ordersItems, validFrom, validTo); 
+ 
+	public NextDayOrder(Date deliveryDate, Set<OrderItem> orderItems, Date validFrom, Date validTo) {
+		super(deliveryDate, orderItems, validFrom, validTo);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

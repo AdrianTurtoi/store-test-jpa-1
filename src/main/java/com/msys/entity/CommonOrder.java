@@ -9,7 +9,8 @@ import javax.persistence.Table;
 @Table(name = "ORDERS")
 public class CommonOrder extends Order {
 
-	public CommonOrder(Long id, Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
-		super(id, deliveryDate, ordersItems, validFrom, validTo); 
-	}	 
+	public CommonOrder(Date deliveryDate, Set<OrderItem> orderItems, Date validFrom, Date validTo) {
+		super(deliveryDate, orderItems, validFrom, validTo);		
+	}
+
 }
