@@ -2,19 +2,17 @@ package com.msys.web.view;
 
 import com.msys.repository.OrderRepository;
 import com.msys.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
-
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +22,13 @@ import com.msys.entity.OrderItem;
 import com.msys.entity.Supplier;
 import com.msys.entity.User;
 
-@SpringBootApplication
-@EnableJpaRepositories("com.msys.repository")
+//@EnableJpaRepositories("com.msys.repository")
+@EnableJpaRepositories(basePackageClasses = OrderRepository.class)
+@EnableAutoConfiguration
 @EntityScan("com.msys.entity")
 @ComponentScan("com.msys.web.login")
+@SpringBootApplication
+
 public class StoreMSysApplication implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(StoreMSysApplication.class);
@@ -67,7 +68,6 @@ public class StoreMSysApplication implements CommandLineRunner {
 			}
 		});
 
-		// fetch all books
 		for (Order order : orderRepository.findAll()) {
 			log.info(order.toString());
 		}
