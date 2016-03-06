@@ -8,13 +8,16 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.vaadin.ui.Upload;
 import com.msys.entity.Article;
 import com.msys.entity.CommonOrder;
 import com.msys.entity.OrderItem;
+import com.msys.entity.OrdersItems;
 import com.msys.entity.Supplier;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
@@ -59,8 +62,8 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 
 		String[] orderItems;
 		String[] orderDetails;
-		List<OrderItem> listOI = new ArrayList<>();
-		List<CommonOrder> commonOrderList = new ArrayList<>();
+		Set<OrderItem> listOI = new HashSet<>();
+		Set<CommonOrder> commonOrderList = new HashSet<>();
 
 		try {
 			DataInputStream dis = new DataInputStream(
@@ -79,8 +82,9 @@ public class ImportView extends CustomComponent implements View, Upload.Receiver
 					Matcher m = Pattern.compile("(?<=\\[)(.+?)(?=\\])").matcher(input);
 					while (m.find()) {
 						orderItems = m.group().split(";");
-						listOI.add(new OrderItem(new Article(Integer.parseInt(orderItems[0])),
-								Integer.parseInt(orderItems[1]), new Supplier(Integer.parseInt(orderItems[2]))));
+						Article art = new Article(Integer.parseInt(orderItems[0]));
+						Supplier sup = new Supplier(Integer.parseInt(orderItems[2]));
+						listOI.add(new OrderItem(art, Integer.parseInt(orderItems[1]), sup));
 
 					}
 

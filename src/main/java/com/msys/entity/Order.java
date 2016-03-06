@@ -15,6 +15,14 @@ import javax.persistence.Table;
 @Table(name = "ORDERS")
 public class Order { 
 
+	public Order(Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
+		super();
+		this.deliveryDate = deliveryDate;
+		this.ordersItems = ordersItems;
+		this.validFrom = validFrom;
+		this.validTo = validTo;
+	}
+
 	public Order(Long id, Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
 		super();
 		this.id = id;

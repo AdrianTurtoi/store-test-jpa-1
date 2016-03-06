@@ -24,6 +24,15 @@ public class OrderItem {
 	
 	private Set <OrdersItems> ordersItems;
 	
+	public OrderItem(Long id, Set<OrdersItems> ordersItems, Article article, int quantity, Supplier supplier) {
+		super();
+		this.id = id;
+		this.ordersItems = ordersItems;
+		this.article = article;
+		this.quantity = quantity;
+		this.supplier = supplier;
+	}
+
 	private Article article;
 	
 	@Column(name = "QUANTITY")

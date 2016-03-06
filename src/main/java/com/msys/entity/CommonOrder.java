@@ -11,7 +11,5 @@ public class CommonOrder extends Order {
 
 	public CommonOrder(Long id, Date deliveryDate, Set<OrdersItems> ordersItems, Date validFrom, Date validTo) {
 		super(id, deliveryDate, ordersItems, validFrom, validTo); 
-	}
- 
-	 
+	}	 
 }

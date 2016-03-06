@@ -11,6 +11,12 @@ public class OrdersItems implements Serializable {
 	private Order order;
 	private OrderItem orderItem;
 
+	public OrdersItems(Order order, OrderItem orderItem) {
+		super();
+		this.order = order;
+		this.orderItem = orderItem;
+	}
+
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "ID_ORDER")
